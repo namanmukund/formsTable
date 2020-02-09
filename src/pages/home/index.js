@@ -1,9 +1,3 @@
-import React from 'react'
+import HomePage from './HomePage'
 
-const Home = props => (
-  <div>
-    Home
-  </div>
-)
-
-export default Home
+export default HomePage

@@ -1,0 +1,25 @@
+.Head {
+    display: flex;
+    flex-direction: row;
+    min-height: 50px;
+    background: #162c57;
+    width: 100%;
+    color: white;
+}
+
+.Logo {
+    display: flex;
+    justify-content: center;
+    min-width: 100px;
+    height: auto;
+    background: red;
+    margin-left: 20px;
+}
+
+.Dropdown {
+    display: flex;
+    justify-content: center;
+    min-width: 250px;
+    height: auto;
+    margin-left: 5px;
+}

@@ -1,11 +1,11 @@
 import React from 'react'
-import { Route, Link } from 'react-router-dom'
-import Home from '../home'
+import { Route } from 'react-router-dom'
+import HomePage from '../home'
 
 const App = () => (
   <div>
     <main>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" component={HomePage} />
     </main>
   </div>
 )
