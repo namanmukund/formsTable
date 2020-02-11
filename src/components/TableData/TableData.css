@@ -1,16 +1,16 @@
-.TableContainer{
+.TableContainer {
 }
 
-.Table{
+.Table {
 }
 
-.TableHeader{
+.TableHeader {
     min-width: 100px;
     font-family: monospace;
     font-weight: bold;
     font-size: 12px;
 }
 
-.TableRow{
+.TableRow {
 
 }

@@ -1,4 +1,4 @@
-.SearchColumnBody{
+.SearchColumnBody {
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
@@ -6,14 +6,33 @@
     border-bottom: 1px solid #e0dcd4;
 }
 
-.SearchColumn{
+.SearchColumnInput {
     display: flex;
     flex-wrap: wrap;
     border: 1px solid  #e0dcd4;
-    margin: 5px;
+    margin: 5px 5px 8px 5px;
     border-radius: 4px;
     width: 170px;
     height: 40px;
+    font-family: monospace;
+    padding: 4px;
+    font-size: 12px;
+}
+
+.SearchColumnDropdown {
+    height: 40px;
+    width: 170px;
+    margin: 5px 5px 8px 5px;
+    border: 0 solid  #e0dcd4;
+    border-radius: 4px;
+    font-family: monospace;
+    padding: 4px;
+}
+
+.SearchColumnDropdown .MuiInputBase-input {
+    margin: 5px;
+    border: 0 solid  #e0dcd4;
+    border-radius: 4px;
     font-family: monospace;
     padding: 4px;
 }

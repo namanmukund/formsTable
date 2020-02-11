@@ -13,10 +13,9 @@ import LastPage from '@material-ui/icons/LastPage'
 import Remove from '@material-ui/icons/Remove'
 import SaveAlt from '@material-ui/icons/SaveAlt'
 import Search from '@material-ui/icons/Search'
-import ViewColumn from '@material-ui/icons/ViewColumn'
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import MaterialTable from 'material-table'
 import './TableData.css'
-import data from '../../reducers/data'
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -35,128 +34,52 @@ const tableIcons = {
   Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
   SortArrow: forwardRef((props, ref) => <ArrowUpward {...props} ref={ref} />),
   ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-  ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
-}
-
-const getColumnNames = () => {
-  const columns = []
-  for (let columnCount = 0; columnCount < data.length; columnCount += 1) {
-    const minWidth = data[columnCount].DisplayName.length > 20 ?
-      data[columnCount].DisplayName.length * 10 :
-      data[columnCount].DisplayName.length * 20
-    console.log(data[columnCount].DisplayName, data[columnCount].DisplayName.length, minWidth)
-    const columnProps = {
-      title: data[columnCount].DisplayName,
-      field: data[columnCount].MappingColumnName,
-      type: data[columnCount].Type,
-      headerStyle: {
-        minWidth: minWidth,
-        fontWeight: 'bold',
-        height: 50,
-        padding: '2px 2px 0 30px',
-        fontFamily: 'monospace',
-        fontSize: 14,
-        textAlign: 'center',
-        editable: data[columnCount].Editable
-      },
-      cellStyle: {
-        minWidth: minWidth,
-        height: 50,
-        padding: '2px 2px 0 0',
-        fontFamily: 'monospace',
-        textAlign: 'center',
-        fontSize: 14
-      }
-    }
-    columns.push(columnProps)
-  }
-  console.log(columns)
-  return columns
-}
-
-const getTotalRows = () => {
-  let rowCount = 0
-  for (let columnCount = 0; columnCount < data.length; columnCount += 1) {
-    if(data[columnCount].Options != null && rowCount < data[columnCount].Options.length) {
-      rowCount = data[columnCount].Options.length
-    }
-  }
-  console.log(rowCount)
-  return rowCount
-}
-
-const getColumnNameOptionsLengthMap = () => {
-  const columnNameOptionsLengthMap = {}
-  for (let columnCount = 0; columnCount < data.length; columnCount += 1) {
-    if (data[columnCount].Options == null) {
-      columnNameOptionsLengthMap[data[columnCount].MappingColumnName] = 0
-    } else {
-      columnNameOptionsLengthMap[data[columnCount].MappingColumnName] = data[columnCount].Options.length
-    }
-  }
-  console.log(columnNameOptionsLengthMap)
-  return columnNameOptionsLengthMap
-}
-
-const getColumnData = () => {
-  const columnData = []
-  const totalRowCount = getTotalRows()
-  const columnNameOptionsLengthMap = getColumnNameOptionsLengthMap()
-  for (let row = 1; row <= totalRowCount; row += 1) {
-    const rowData = {}
-    for (let columnCount = 0; columnCount < data.length; columnCount += 1) {
-      const key = data[columnCount].MappingColumnName
-      if (columnNameOptionsLengthMap[key] == null) {
-        rowData[key] = 'N/A'
-      }
-      else {
-        if (columnNameOptionsLengthMap[key] < row) {
-          rowData[key] = 'N/A'
-        } else {
-          rowData[key] = data[columnCount].Options[row - 1]['DisplayName']
-        }
-      }
-    }
-    columnData.push(rowData)
-  }
-  console.log(columnData)
-
-  return columnData
+  ViewColumn: forwardRef((props, ref) => <VisibilityIcon {...props} ref={ref} />)
 }
 
 class TableData extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      columns: getColumnNames(),
-      data: getColumnData(),
+      columns: this.props.columns,
+      data: this.props.tableData
     }
   }
 
   addRow = () => {
-    console.log('Adding Row....')
   }
 
 
-
   render() {
+    console.log('Data length', this.state.data.length)
+    if (this.state.data.length == 0) {
+      console.log('-----------------------------')
+      return(
+        <MaterialTable
+          title='SL GL Mapping'
+          columns={this.state.columns}
+          data={this.state.data}
+          icons={tableIcons}
+          options={{
+            exportButton: true,
+            columnsButton: true,
+          }}
+          editable={{
+            onRowAdd: () => this.props.onAdd,
+          }}
+        >
+
+        </MaterialTable>
+      )
+    }
+
     return(
       <MaterialTable
         title='SL GL Mapping'
         columns={this.state.columns}
         data={this.state.data}
         editable={{
-          onRowAdd: newData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                this.setState(prevState => {
-                  const data = [...prevState.data];
-                  data.push(newData);
-                  return { ...prevState, data };
-                });
-              }, 600);
-            }),
+          onRowAdd: () => this.props.onAdd,
           onRowUpdate: (newData, oldData) =>
             new Promise(resolve => {
               setTimeout(() => {
@@ -183,7 +106,11 @@ class TableData extends React.Component{
             })
         }}
         icons={tableIcons}
-        exportButton
+        options={{
+          exportButton: true,
+          columnsButton: true,
+        }}
+
       >
 
       </MaterialTable>

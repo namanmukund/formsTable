@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux'
-import counter from './reducer'
+import searchColumnValues from './searchColumnValues'
+import populateNewData from './populateNewData'
 
-export default combineReducers({
-  data: counter
+const appReducer= combineReducers({
+  searchColumnValues,
+  populateNewData
 })
+
+export default appReducer

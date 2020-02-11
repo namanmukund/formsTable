@@ -1,0 +1,54 @@
+.AddDataMain {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    padding: 5px 5px 5px 20px;
+}
+
+.AddDataInput {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid  #e0dcd4;
+    margin: 5px 5px 10px 5px;
+    border-radius: 4px;
+    width: 250px;
+    height: 47px;
+    font-family: monospace;
+    padding: 4px;
+    font-size: 14px;
+}
+
+.AddDataDropdown {
+    height: 47px;
+    width: 250px;
+    margin: 5px 5px 10px 5px;
+    border: 0 solid  #e0dcd4;
+    border-radius: 4px;
+    font-family: monospace;
+    padding: 4px;
+}
+
+.AddDataDropdown .MuiInputBase-input {
+    margin: 5px 5px 10px 5px;
+    border: 0 solid  #e0dcd4;
+    border-radius: 4px;
+    font-family: monospace;
+    padding: 4px;
+    font-size: 14px;
+}
+
+.AddDataButton {
+    margin-top: 20px;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+@keyframes rippleDrop {
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+}
