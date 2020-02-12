@@ -20,9 +20,15 @@ class SearchColumnBody extends React.Component{
     this.setState({
       searchColumnValues: searchColumnValues
     })
-    const { updateSearchColumnValue, fetchData } = this.props
+    const { updateSearchColumnValue } = this.props
     updateSearchColumnValue(key, value)
-    fetchData(this.state.searchColumnValues)
+  }
+
+  getTableData = async () => {
+    console.log('Props', this.props)
+    console.log('Fetching Data')
+    const { fetchData } = this.props
+    await fetchData(this.state.searchColumnValues)
   }
 
   getDisplayOptions(column) {
@@ -81,7 +87,6 @@ class SearchColumnBody extends React.Component{
   }
 
   render() {
-    console.log('Props', this.props.searchColumnValues)
     const searchColumns = []
     const searchColumnsToShow = this.props.searchColumns
     const totalColumnsToShow = this.props.searchColumns.length
@@ -128,8 +133,8 @@ class SearchColumnBody extends React.Component{
         {searchColumns}
       </div>
       <TableData
-        tableData={this.props.tableData}
-        columns={this.getColumnNames()}
+        tableData={this.getTableData()}
+        columns={this.props.tableData}
       />
       </div>
     )

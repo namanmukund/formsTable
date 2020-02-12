@@ -1,4 +1,6 @@
 import requestToApi from '../../utils/requestToApi'
+import tableData from '../../reducers/tableData'
+import errors from '../../constants/errors'
 
 export const FETCHING_DATA = 'FETCHING_DATA'
 export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS'
@@ -21,17 +23,24 @@ const fetchDataFailure = (error) => ({
 const getFetchUrl = (searchColumnValues) => {
   let fetchUrl = 'https://localhost:44355/api/mappingentity?'
   const keys = Object.keys(searchColumnValues)
+  console.log('Keys', keys)
   keys.forEach((key) => {
-    fetchUrl += (key + searchColumnValues.replace(' ', '%20'))
+    console.log('Value', searchColumnValues[key])
+    if (searchColumnValues[key].length) {
+      fetchUrl += (key + searchColumnValues[key].replace(' ', '%20'))
+    }
   })
 
   return fetchUrl
 }
 
-const fetchData = (searchColumnValues) => async dispatch => {
+const fetchData = (searchColumnValues) => async (dispatch) => {
   try {
-    dispatch(fetchingData())
-    const {data} = await requestToApi(getFetchUrl(searchColumnValues), 'GET')
+    // dispatch(fetchingData())
+    console.log('Fetch url', getFetchUrl())
+    // const {data} = await requestToApi(getFetchUrl(searchColumnValues), 'GET')
+    const data = tableData
+    console.log(tableData)
     if (data) {
       dispatch(fetchDataSuccess(data))
     }
@@ -40,7 +49,7 @@ const fetchData = (searchColumnValues) => async dispatch => {
     if (error) {
       dispatch(fetchDataFailure(error))
     } else {
-      dispatch('Unexpected error occurred')
+      dispatch(fetchDataFailure(errors.UnexpectedError))
     }
   }
 }

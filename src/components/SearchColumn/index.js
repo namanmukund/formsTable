@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import updateSearchColumnValue from '../../actions/searchColumn'
 import fetchData from '../../actions/data'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 import SearchColumnBody from './SearchColumnBody'
 
 const mapStateToProps = state => state.searchColumnValues

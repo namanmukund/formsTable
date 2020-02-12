@@ -51,8 +51,7 @@ class TableData extends React.Component{
 
 
   render() {
-    console.log('Data length', this.state.data.length)
-    if (this.state.data.length == 0) {
+    if (this.state.data && this.state.data.length === 0) {
       console.log('-----------------------------')
       return(
         <MaterialTable
@@ -78,33 +77,6 @@ class TableData extends React.Component{
         title='SL GL Mapping'
         columns={this.state.columns}
         data={this.state.data}
-        editable={{
-          onRowAdd: () => this.props.onAdd,
-          onRowUpdate: (newData, oldData) =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                if (oldData) {
-                  this.setState(prevState => {
-                    const data = [...prevState.data];
-                    data[data.indexOf(oldData)] = newData;
-                    return { ...prevState, data };
-                  });
-                }
-              }, 600);
-            }),
-          onRowDelete: oldData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                this.setState(prevState => {
-                  const data = [...prevState.data];
-                  data.splice(data.indexOf(oldData), 1);
-                  return { ...prevState, data };
-                });
-              }, 600);
-            })
-        }}
         icons={tableIcons}
         options={{
           exportButton: true,
