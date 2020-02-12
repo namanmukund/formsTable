@@ -8,7 +8,7 @@ class HomePage extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      openAddNewRecordView: true
+      openAddNewRecordView: false
     }
   }
 
@@ -39,7 +39,7 @@ class HomePage extends React.Component{
     return (
       <div>
         <Header />
-        <SearchColumnBody />
+        <SearchColumnBody onRowAddClick={() => this.toggleAddNewRecordView()} />
       </div>
     )
   }

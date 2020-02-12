@@ -14,3 +14,9 @@
 .TableRow {
 
 }
+
+.MuiIconButton-root {
+    padding: 0 !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+}

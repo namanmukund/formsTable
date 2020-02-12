@@ -17,8 +17,12 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import MaterialTable from 'material-table'
 import './TableData.css'
 
-const tableIcons = {
-  Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+const tableIcons = tableDataProps => ({
+  Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} onClick={(e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    tableDataProps.onRowAddClick()
+  }} />),
   Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
   Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
   Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
@@ -35,30 +39,22 @@ const tableIcons = {
   SortArrow: forwardRef((props, ref) => <ArrowUpward {...props} ref={ref} />),
   ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
   ViewColumn: forwardRef((props, ref) => <VisibilityIcon {...props} ref={ref} />)
-}
+})
 
 class TableData extends React.Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-      columns: this.props.columns,
-      data: this.props.tableData
-    }
-  }
 
   addRow = () => {
   }
 
-
   render() {
-    if (this.state.data && this.state.data.length === 0) {
+    if (this.props.tableData && this.props.tableData.length === 0) {
       console.log('-----------------------------')
       return(
         <MaterialTable
           title='SL GL Mapping'
-          columns={this.state.columns}
-          data={this.state.data}
-          icons={tableIcons}
+          columns={this.props.columns}
+          data={this.props.tableData}
+          icons={tableIcons(this.props)}
           options={{
             exportButton: true,
             columnsButton: true,
@@ -71,18 +67,45 @@ class TableData extends React.Component{
         </MaterialTable>
       )
     }
+    console.log('--> Table data props', this.props)
 
     return(
       <MaterialTable
         title='SL GL Mapping'
-        columns={this.state.columns}
-        data={this.state.data}
-        icons={tableIcons}
+        columns={this.props.columns}
+        data={this.props.tableData}
+        icons={tableIcons(this.props)}
         options={{
           exportButton: true,
           columnsButton: true,
         }}
-
+        editable={{
+          onRowAdd: () => this.props.onAdd,
+          onRowUpdate: (newData, oldData) =>
+            new Promise(resolve => {
+              setTimeout(() => {
+                resolve();
+                if (oldData) {
+                  this.setState(prevState => {
+                    const data = [...prevState.data];
+                    data[data.indexOf(oldData)] = newData;
+                    return { ...prevState, data };
+                  });
+                }
+              }, 6000);
+            }),
+          onRowDelete: oldData =>
+            new Promise(resolve => {
+              setTimeout(() => {
+                resolve();
+                this.setState(prevState => {
+                  const data = [...prevState.data];
+                  data.splice(data.indexOf(oldData), 1);
+                  return { ...prevState, data };
+                });
+              }, 600);
+            })
+        }}
       >
 
       </MaterialTable>

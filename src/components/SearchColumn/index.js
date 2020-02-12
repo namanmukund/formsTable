@@ -7,7 +7,10 @@ import SearchColumnBody from './SearchColumnBody'
 const mapStateToProps = state => state.searchColumnValues
 
 const mapDispatchToProps = dispatch => ({
-  fetchData: (searchColumnValues) => dispatch(fetchData(searchColumnValues)),
+  fetchData: (searchColumnValues) => {
+    console.log('Insssiiiidde fetchData')
+    fetchData(dispatch, searchColumnValues)
+  },
   updateSearchColumnValue: (key, value) => dispatch(updateSearchColumnValue(key, value))
 })
 

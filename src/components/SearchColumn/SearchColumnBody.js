@@ -14,6 +14,10 @@ class SearchColumnBody extends React.Component{
     }
   }
 
+  componentDidMount() {
+    this.getTableData()
+  }
+
   changeColumnValues = (key, value) => {
     const searchColumnValues = this.state.searchColumnValues
     searchColumnValues[key] = value
@@ -24,11 +28,9 @@ class SearchColumnBody extends React.Component{
     updateSearchColumnValue(key, value)
   }
 
-  getTableData = async () => {
-    console.log('Props', this.props)
-    console.log('Fetching Data')
+  getTableData = () => {
     const { fetchData } = this.props
-    await fetchData(this.state.searchColumnValues)
+    fetchData(this.state.searchColumnValues)
   }
 
   getDisplayOptions(column) {
@@ -127,14 +129,16 @@ class SearchColumnBody extends React.Component{
         )
       }
     }
+    // console.log(this.props.columns)
     return (
       <div style={{marginTop: 8}}>
       <div className='SearchColumnBody'>
         {searchColumns}
       </div>
       <TableData
-        tableData={this.getTableData()}
-        columns={this.props.tableData}
+        tableData={this.props.tableData}
+        columns={this.getColumnNames()}
+        onRowAddClick={this.props.onRowAddClick}
       />
       </div>
     )

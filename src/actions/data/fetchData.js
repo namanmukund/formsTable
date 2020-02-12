@@ -34,10 +34,11 @@ const getFetchUrl = (searchColumnValues) => {
   return fetchUrl
 }
 
-const fetchData = (searchColumnValues) => async (dispatch) => {
+const fetchData = async (dispatch) => {
+  console.log('sssssss ----> fetchData', dispatch)
   try {
     // dispatch(fetchingData())
-    console.log('Fetch url', getFetchUrl())
+    // console.log('Fetch url', getFetchUrl())
     // const {data} = await requestToApi(getFetchUrl(searchColumnValues), 'GET')
     const data = tableData
     console.log(tableData)
